@@ -8,3 +8,5 @@ def about_view(request):
     return render(request,'mysite\\about.html')
 def contact_view(request):
     return render(request,'mysite\\contact.html')
+def elements_view(request):
+    return render(request,'mysite\\elements.html')
