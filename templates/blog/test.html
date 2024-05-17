@@ -9,16 +9,6 @@
 
 <body>
     {{post}}
-    {% for post in posts%}
-    {% if post.status == 0 %}
-    <p>not published yet</p>
-    {% elif post.status == 1 %}
-    <h2>{{post.title}}</h2>
-    <p>{{post.title}}</p>
-    <smal>{{post.published_date}}</smal>
-    {% endif %}
-    {% endfor %}
-
 </body>
 
 </html>
