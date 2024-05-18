@@ -6,12 +6,12 @@ from django.utils import timezone
 # Create your views here.
 def blog_view(request):
     #'blog/blog-home.html' or 'blog\\blog-home.html'
-    post = Post.objects.filter(published_date__lte=timezone.now())#if postTime < now, post published.
+    post = Post.objects.filter(published_date__lte=timezone.now(),status=1)#if postTime < now, post published.    
     content = {'posts':post}
     return render(request, 'blog/blog-home.html',content)
 
 def blog_single(request,pid):    
-    post = get_object_or_404(Post,id=pid)
+    post = get_object_or_404(Post,id=pid,status=1,published_date__lte=timezone.now(),)# check if publish status = 1 and postTime < now time, then publish that
     post.counted_views = post.counted_views+1
     post.save()
     content = {'post':post}
