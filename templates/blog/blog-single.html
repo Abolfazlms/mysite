@@ -27,7 +27,7 @@
 				<div class="single-post row">
 					<div class="col-lg-12">
 						<div class="feature-img">
-							<img class="img-fluid" src="{% static 'img/blog/feature-img1.jpg' %}" alt="">
+							<img class="img-fluid" src="{{post.image.url}}" alt="">
 						</div>
 					</div>
 					<div class="col-lg-3  col-md-3 meta-details">
@@ -69,7 +69,7 @@
 							{%if prev%}
 							<div class="thumb">
 								<a href="{% url 'blog:single' pid=prev.id%}"><img class="img-fluid"
-										src="{% static 'img/blog/prev.jpg' %}" alt=""></a>
+										src="{{prev.image.url}}" alt=""></a>
 							</div>
 							<div class="arrow">
 								<a href="{% url 'blog:single' pid=prev.id%}"><span
@@ -101,7 +101,7 @@
 							</div>
 							<div class="thumb">
 								<a href="{% url 'blog:single' pid=next.id%}"><img class="img-fluid"
-										src="{% static 'img/blog/next.jpg' %}" alt=""></a>
+										src="{{next.image.url}}" alt=""></a>
 							</div>
 							{%endif%}
 						</div>
