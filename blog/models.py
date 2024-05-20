@@ -26,4 +26,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    # def snippets(self):
+    #     return self.content [:30] + '...'
 
