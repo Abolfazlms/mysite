@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from blog.models import Post
 from django.utils import timezone
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 #from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
@@ -23,6 +25,16 @@ def blog_view(request,**kwargs):
         post = post.filter(category__name=kwargs['cat_name'])
     if kwargs.get('author_username') != None:
         post = post.filter(author__username= kwargs['author_username'])
+
+    post = Paginator(post,3)
+    try:
+        page_number = request.GET.get('page')
+        post = post.get_page(page_number)        
+    except PageNotAnInteger :        
+        post = post.get_page(1)
+    except EmptyPage:
+        post = post.get_page(1)
+
     content = {'posts':post}
     return render(request, 'blog/blog-home.html',content)
 
@@ -53,9 +65,7 @@ def blog_search(request):
         #     posts = posts.filter(content__contains=s)
     content = {'posts':posts}    
     return render(request, 'blog/blog-home.html',content)
-    
-
-
+ 
 def test(request):
     # post = Post.objects.get(id=pid)
     # post = get_object_or_404(Post,id=pid)
