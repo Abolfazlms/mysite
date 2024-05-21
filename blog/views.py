@@ -11,14 +11,21 @@ def blog_view(request):
     return render(request, 'blog/blog-home.html',content)
 
 def blog_single(request,pid):    
-    post = get_object_or_404(Post,id=pid,status=1,published_date__lte=timezone.now(),)# check if publish status = 1 and postTime < now time, then publish that
+    posts = get_object_or_404(Post,id=pid,status=1,published_date__lte=timezone.now(),)# check if publish status = 1 and postTime < now time, then publish that
     prevPost = Post.objects.filter(id__lt = pid,published_date__lte=timezone.now(),status=1).last()
     nextPost = Post.objects.filter(id__gt = pid,published_date__lte=timezone.now(),status=1).first()
     
-    post.counted_views = post.counted_views+1
-    post.save()    
-    content = {'post':post,'prev':prevPost,'next':nextPost}
+    posts.counted_views = posts.counted_views+1
+    posts.save()    
+    content = {'post':posts,'prev':prevPost,'next':nextPost}
     return render(request, 'blog/blog-single.html',content,)
+
+def blog_category(request,cat_name):
+    posts = Post.objects.filter(status=1,published_date__lte=timezone.now(),)
+    posts = posts.filter(category__name=cat_name)
+    content = {'posts':posts}
+
+    return render(request,'blog/blog-home.html',content)
 
 def test(request):
     # post = Post.objects.get(id=pid)
