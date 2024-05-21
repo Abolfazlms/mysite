@@ -4,9 +4,25 @@ from django.utils import timezone
 #from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
-def blog_view(request):
+# def blog_view(request,cat_name = None,  author_username = None):
+#     #'blog/blog-home.html' or 'blog\\blog-home.html'
+#     post = Post.objects.filter(published_date__lte=timezone.now(),status=1)#if postTime < now, post published.   
+#     #if cat_name: 
+#     if cat_name != None:
+#         post = post.filter(category__name=cat_name)
+#     if author_username:
+#         post = post.filter(author__username= author_username)
+#     content = {'posts':post}
+#     return render(request, 'blog/blog-home.html',content)
+
+def blog_view(request,**kwargs):
     #'blog/blog-home.html' or 'blog\\blog-home.html'
-    post = Post.objects.filter(published_date__lte=timezone.now(),status=1)#if postTime < now, post published.    
+    post = Post.objects.filter(published_date__lte=timezone.now(),status=1)#if postTime < now, post published.   
+    #if cat_name: 
+    if kwargs.get('cat_name') != None:
+        post = post.filter(category__name=kwargs['cat_name'])
+    if kwargs.get('author_username') != None:
+        post = post.filter(author__username= kwargs['author_username'])
     content = {'posts':post}
     return render(request, 'blog/blog-home.html',content)
 
@@ -26,6 +42,19 @@ def blog_category(request,cat_name):
     content = {'posts':posts}
 
     return render(request,'blog/blog-home.html',content)
+
+def blog_search(request):
+    posts = Post.objects.filter(published_date__lte=timezone.now(),status=1)
+    
+    if request.method == 'GET':
+        # print(request.GET.get('s'))
+        posts = posts.filter(content__contains=request.GET.get('s') )
+        # if s := request.GET.get('s'): 
+        #     posts = posts.filter(content__contains=s)
+    content = {'posts':posts}    
+    return render(request, 'blog/blog-home.html',content)
+    
+
 
 def test(request):
     # post = Post.objects.get(id=pid)
