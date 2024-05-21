@@ -20,9 +20,10 @@ def blog_single(request,pid):
     content = {'post':post,'prev':prevPost,'next':nextPost}
     return render(request, 'blog/blog-single.html',content,)
 
-def test(request,pid):
+def test(request):
     # post = Post.objects.get(id=pid)
-    post = get_object_or_404(Post,id=pid)
-    content = {'post':post}
-    return render(request, 'blog/test.html',content)
+    # post = get_object_or_404(Post,id=pid)
+    # content = {'post':post}
+    # return render(request, 'blog/test.html',content)
+    return render(request, 'blog/test.html')
 
