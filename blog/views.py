@@ -46,7 +46,7 @@ def blog_single(request,pid):
     posts.counted_views = posts.counted_views+1
     posts.save()    
     content = {'post':posts,'prev':prevPost,'next':nextPost}
-    return render(request, 'blog/blog-single.html',content,)
+    return render(request, 'blog/blog-single.html',content)
 
 def blog_category(request,cat_name):
     posts = Post.objects.filter(status=1,published_date__lte=timezone.now(),)
