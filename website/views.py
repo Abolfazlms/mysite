@@ -5,6 +5,7 @@ from website.models import Contact
 from website.forms import ContactForm, NewsletterForm
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 
 
 # Create your views here.
@@ -21,6 +22,9 @@ def contact_view(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.add_message(request,messages.SUCCESS,'Your ticket submitted succesfuly.')
+        else:
+            messages.add_message(request,messages.ERROR,'Your ticket didn\'t submitted.')
     form = ContactForm()
     return render(request,'mysite\\contact.html',{'form':form})
 
