@@ -25,6 +25,8 @@ def blog_view(request,**kwargs):
         post = post.filter(category__name=kwargs['cat_name'])
     if kwargs.get('author_username') != None:
         post = post.filter(author__username= kwargs['author_username'])
+    if kwargs.get('tag_name') != None:
+        post = post.filter(tags__name__in=[kwargs['tag_name']])
 
     post = Paginator(post,3)
     try:
