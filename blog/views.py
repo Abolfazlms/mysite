@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from blog.models import Post, Comments
 from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from blog.forms import CommentForm
+from django.contrib import messages
 
 #from django.http import HttpResponse, JsonResponse
 
@@ -41,15 +43,26 @@ def blog_view(request,**kwargs):
     return render(request, 'blog/blog-home.html',content)
 
 def blog_single(request,pid):    
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            messages.add_message(request,messages.SUCCESS,'Your comment submitted successfully')
+            form.save()
+        else:
+            messages.add_message(request,messages.ERROR,'Your comment didn\'t submitted.')
+
     posts = get_object_or_404(Post,id=pid,status=1,published_date__lte=timezone.now(),)# check if publish status = 1 and postTime < now time, then publish that
     prevPost = Post.objects.filter(id__lt = pid,published_date__lte=timezone.now(),status=1).last()
-    nextPost = Post.objects.filter(id__gt = pid,published_date__lte=timezone.now(),status=1).first()
-    
-    # comments = Comments.objects.filter(post = posts.id, approved = True).order_by('-created_date')
-    comments = Comments.objects.filter(post = posts.id, approved = True)
+    nextPost = Post.objects.filter(id__gt = pid,published_date__lte=timezone.now(),status=1).first()   
     posts.counted_views = posts.counted_views+1
     posts.save()    
-    content = {'post':posts,'prev':prevPost,'next':nextPost, 'comments':comments}
+
+    # comments = Comments.objects.filter(post = posts.id, approved = True).order_by('-created_date')
+    comments = Comments.objects.filter(post = posts.id, approved = True)
+
+    form = CommentForm()
+    content = {'post':posts,'prev':prevPost,'next':nextPost, 'comments':comments, 'form': form}
     return render(request, 'blog/blog-single.html',content)
 
 def blog_category(request,cat_name):

@@ -49,7 +49,8 @@
 							<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{post.counted_views}} Views</a> <span
 									class="lnr lnr-eye"></span></p>
 							<p class="comments col-lg-12 col-md-12 col-6"><a href="#">{{comments|length}} Comments</a>
-								<span class="lnr lnr-bubble"></span></p>
+								<span class="lnr lnr-bubble"></span>
+							</p>
 							<ul class="social-links col-lg-12 col-md-12 col-6">
 								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -132,11 +133,13 @@
 								<a href="" class="btn-reply text-uppercase">reply</a>
 							</div> -->
 						</div>
+						{% empty %}
+						<p class="d-flex justify-content-center"> No comments here, be the first one to tell your
+							thoughts.</p>
+						{% endfor %}
 
 					</div>
-					{% empty %}
-					<p> no comments here. be the first one to tell your thoughts</p>
-					{% endfor %}
+
 					<!-- <div class="comment-list left-padding">
 						<div class="single-comment justify-content-between d-flex">
 							<div class="user justify-content-between d-flex">
@@ -160,19 +163,21 @@
 				</div>
 				<div class="comment-form">
 					<h4>Leave a Comment</h4>
-					<form>
+					<form method="post" action="{% url 'blog:single' pid=post.id %}">
+						{% csrf_token %}
+						<input type="hidden" name="post" value="{{post.id}}">
 						<div class="form-group form-inline">
 							<div class="form-group col-lg-6 col-md-12 name">
-								<input type="text" class="form-control" id="name" placeholder="Enter Name"
+								<input type="text" class="form-control" name="name" placeholder="Enter Name"
 									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
 							</div>
 							<div class="form-group col-lg-6 col-md-12 email">
-								<input type="email" class="form-control" id="email" placeholder="Enter email address"
+								<input type="email" class="form-control" name="email" placeholder="Enter email address"
 									onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
 							</div>
 						</div>
 						<div class="form-group">
-							<input type="text" class="form-control" id="subject" placeholder="Subject"
+							<input type="text" class="form-control" name="subject" placeholder="Subject"
 								onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
 						</div>
 						<div class="form-group">
@@ -180,9 +185,10 @@
 								onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'"
 								required=""></textarea>
 						</div>
-						<a href="#" class="primary-btn text-uppercase">Post Comment</a>
+						<button type="submit" class="primary-btn text-uppercase">Post Comment</button>
 					</form>
 				</div>
+				{% include 'message.html' %}
 				<!-- <div class="comments-area">
 					<div id="disqus_thread"></div>
 					<script>
