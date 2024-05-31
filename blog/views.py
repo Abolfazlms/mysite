@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from blog.models import Post
+from blog.models import Post, Comments
 from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
@@ -45,9 +45,11 @@ def blog_single(request,pid):
     prevPost = Post.objects.filter(id__lt = pid,published_date__lte=timezone.now(),status=1).last()
     nextPost = Post.objects.filter(id__gt = pid,published_date__lte=timezone.now(),status=1).first()
     
+    # comments = Comments.objects.filter(post = posts.id, approved = True).order_by('-created_date')
+    comments = Comments.objects.filter(post = posts.id, approved = True)
     posts.counted_views = posts.counted_views+1
     posts.save()    
-    content = {'post':posts,'prev':prevPost,'next':nextPost}
+    content = {'post':posts,'prev':prevPost,'next':nextPost, 'comments':comments}
     return render(request, 'blog/blog-single.html',content)
 
 def blog_category(request,cat_name):
