@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'website.apps.WebsiteConfig',
     'blog.apps.BlogConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 # sites framework
