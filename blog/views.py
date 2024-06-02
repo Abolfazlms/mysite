@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from blog.forms import CommentForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 #from django.http import HttpResponse, JsonResponse
 
@@ -42,6 +43,7 @@ def blog_view(request,**kwargs):
     content = {'posts':post}
     return render(request, 'blog/blog-home.html',content)
 
+# @login_required
 def blog_single(request,pid):    
 
     if request.method == 'POST':
