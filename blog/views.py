@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from blog.models import Post, Comments
 from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from blog.forms import CommentForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 #from django.http import HttpResponse, JsonResponse
 
@@ -59,14 +61,22 @@ def blog_single(request,pid):
     nextPost = Post.objects.filter(id__gt = pid,published_date__lte=timezone.now(),status=1).first()   
     posts.counted_views = posts.counted_views+1
     posts.save()    
+   
+    if not posts.login_required :
+         # comments = Comments.objects.filter(post = posts.id, approved = True).order_by('-created_date')
+        comments = Comments.objects.filter(post = posts.id, approved = True)
+        form = CommentForm()
+        content = {'post':posts,'prev':prevPost,'next':nextPost, 'comments':comments, 'form': form}
+        return render(request, 'blog/blog-single.html',content)
+    elif posts.login_required and not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('accounts:login'))
+    else:
+        comments = Comments.objects.filter(post = posts.id, approved = True)
+        form = CommentForm()
+        content = {'post':posts,'prev':prevPost,'next':nextPost, 'comments':comments, 'form': form}
+        return render(request, 'blog/blog-single.html',content)
 
-    # comments = Comments.objects.filter(post = posts.id, approved = True).order_by('-created_date')
-    comments = Comments.objects.filter(post = posts.id, approved = True)
-
-    form = CommentForm()
-    content = {'post':posts,'prev':prevPost,'next':nextPost, 'comments':comments, 'form': form}
-    return render(request, 'blog/blog-single.html',content)
-
+    
 def blog_category(request,cat_name):
     posts = Post.objects.filter(status=1,published_date__lte=timezone.now(),)
     posts = posts.filter(category__name=cat_name)
