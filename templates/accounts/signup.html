@@ -35,14 +35,16 @@
         <label for="inputPassword" class="sr-only">Confirm Password</label>
         <input type="password" name="password2" class="form-control" placeholder="Confirm Password" required>
 
-        <div class="checkbox mb-3">
-            <!-- {{form.as_p}} -->
+        <!-- <div class="checkbox mb-3">
+            {{form.as_p}}
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
-        </div>
+        </div> -->
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2023-2024</p>
+        </br>
+        <div>Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a>
+            <p class="mt-5 mb-3 text-muted">&copy; 2023-2024</p>
     </form>
 </body>
 
