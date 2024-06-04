@@ -7,7 +7,8 @@ from django.urls import reverse
 from .forms import UserCreationForm, EmailOrUsernameModelBackend
 
 from django.urls import reverse_lazy
-from django.contrib.auth.views import PasswordResetView
+from django.contrib.auth.views import PasswordResetView, PasswordContextMixin
+from django.views.generic.base import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
 
 import sweetify
@@ -85,4 +86,4 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       "if an account exists with the email you entered. You should receive them shortly." \
                       " If you don't receive an email, " \
                       "please make sure you've entered the address you registered with, and check your spam folder."
-    success_url = reverse_lazy('accounts:password_reset_complete')
+    success_url = reverse_lazy('blog:index')
