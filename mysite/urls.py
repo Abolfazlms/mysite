@@ -27,6 +27,8 @@ from blog.sitemaps import BlogSitemap
 
 import debug_toolbar
 
+from django.contrib.auth import views as auth_views
+
 sitemaps = {
     'static':StaticViewSitemap,
     'blog':BlogSitemap
@@ -43,7 +45,9 @@ urlpatterns = [
     path('__debug__/',include(debug_toolbar.urls)),
     path('summernote/', include('django_summernote.urls')),
     path('captcha/', include('captcha.urls')),
+    
 ]
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
 

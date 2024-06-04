@@ -1,4 +1,5 @@
 {% load static %}
+
 <!doctype html>
 <html lang="en">
 
@@ -34,6 +35,10 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div> -->
+
+        <a href="{% url 'accounts:password_reset' %}"><i>Forgot Password?</i></a>
+        </br>
+        </br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </br>
         <div>Don't have an account? <a href="{% url 'accounts:signup' %}">Sign up</a>
@@ -42,3 +47,6 @@
 </body>
 
 </html>
+{% load sweetify %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.js"></script>
+{% sweetify %}

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -53,6 +54,9 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'sweetify',
 ]
+
+#sweeitify configuration
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 # sites framework
 SITE_ID = 2
@@ -199,3 +203,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# email configs
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+# EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
+# EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
+EMAIL_HOST_USER = 'Abolfazlms1400@gmail.com'
+EMAIL_HOST_PASSWORD = 'Ab14002021*'
