@@ -212,4 +212,4 @@ EMAIL_PORT = 587
 # EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
 # EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
 EMAIL_HOST_USER = 'Abolfazlms1400@gmail.com'
-EMAIL_HOST_PASSWORD = 'Ab14002021*'
+EMAIL_HOST_PASSWORD = 'ykxy ajrb ebdy dqnv'
