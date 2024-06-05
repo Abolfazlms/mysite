@@ -7,7 +7,7 @@ from django.urls import reverse
 from .forms import UserCreationForm, EmailOrUsernameModelBackend
 
 from django.urls import reverse_lazy
-from django.contrib.auth.views import PasswordResetView, PasswordContextMixin,FormView
+from django.contrib.auth.views import PasswordResetView, PasswordContextMixin,PasswordResetConfirmView,PasswordResetCompleteView
 from django.views.generic.base import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
 
@@ -88,5 +88,10 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
                       "please make sure you've entered the address you registered with, and check your spam folder."
     success_url = reverse_lazy('blog:index')
 
-class PasswordResetConfirmView(PasswordContextMixin, FormView):
+class ResetPasswordConfirmView(PasswordResetConfirmView):
     success_url = reverse_lazy("accounts:password_reset_complete")
+    template_name = "accounts/password_reset_confirm.html"
+    
+class ResetPasswordCompleteView(PasswordResetCompleteView):
+    template_name = "accounts/password_reset_complete.html"
+
