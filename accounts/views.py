@@ -68,7 +68,6 @@ def signup_view(request):
                 # return redirect('accounts/login/')
                 sweetify.success(request,'signup succesfully!',text='now you can login to your account.', persistent='ok', type='success',timer=2000)
                 return redirect('/')
-            sweetify.success(request,'signup succesfully!',text='now you can login to your account.', persistent='ok', type='success',timer=2000)
 
         form = UserCreationForm()
         context = {'form':form}
