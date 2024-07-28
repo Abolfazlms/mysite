@@ -15,8 +15,8 @@ ALLOWED_HOSTS = ['heyweb.ir','www.heyweb.ir']
 SITE_ID = 2
 
 # Application definition
-INSTALLED_APPS = [
-]
+# INSTALLED_APPS = [
+# ]
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
